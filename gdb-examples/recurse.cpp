@@ -10,14 +10,15 @@
 
 void recurse(int index, int length) {
 //
-    if(index == 0)
+    if(length== 0)
         return;
 
 	for(int q=1; q<index; q++)
 		std::cout<<'*';
+
 	std::cout<<std::endl;
 
-	recurse(index+1, length);
+	recurse(index+1, length-1);
 }
 
 
