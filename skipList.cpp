@@ -11,8 +11,8 @@
  * Uses two sentinel nodes, each initially of height 1
  */
 SkipList::SkipList() {
-    SkipNode* head_ = new SkipNode();
-    SkipNode* tail_ = new SkipNode();
+    head_ = new SkipNode();
+    tail_ = new SkipNode();
 
     head_->nodePointers[0].next = tail_;
     tail_->nodePointers[0].prev = head_;
@@ -23,11 +23,11 @@ SkipList::SkipList() {
     tail_->key = INT_MAX;
     tail_->value = HSLAPixel();
 
-    int listHeight_ = 1;
-    int length_ = 0;
+    listHeight_ = 1;
+    length_ = 0;
 
-    int probability_ = 50;
-    int maxLevel_ = 14;  // log(128 * 128)
+    probability_ = 50;
+    maxLevel_ = 14;  // log(128 * 128)
 }
 
 /**
@@ -86,7 +86,7 @@ void SkipList::insert(int key, HSLAPixel value) {
         head_->nodePointers.push_back(SkipPointer());
         tail_->nodePointers.push_back(SkipPointer());
     }
-     
+
     this->listHeight_ = max(this->listHeight_, newNodeLevel);
 
     SkipNode * prev = traverse;
@@ -192,7 +192,7 @@ SkipNode * SkipList::findRHelper(int key, int level, SkipNode * curr) {
     if (nextKey > key) {
         ret = findRHelper(key, level, curr);
     } else {
-        ret = findRHelper(key, level, curr->nodePointers[level].next);    
+        ret = findRHelper(key, level, curr->nodePointers[level].next);
     }
 
     return NULL;
@@ -276,4 +276,3 @@ vector<int> SkipList::traverse() {
 
     return ret;
 }
-
