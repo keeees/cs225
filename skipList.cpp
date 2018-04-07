@@ -60,6 +60,7 @@ void SkipList::insert(int key, HSLAPixel value) {
     // be updated to the new value.
     if (temp) {
         temp->value = value;
+        return;
     }
 
     length_++;
@@ -186,16 +187,17 @@ SkipNode * SkipList::findRHelper(int key, int level, SkipNode * curr) {
     // Base Case:
     if (nextKey == key) {
         ret = curr->nodePointers[level].next;
+        return ret;
     }
 
     // Recusive Case:
     if (nextKey > key) {
-        ret = findRHelper(key, level, curr);
+        ret =  findRHelper(key, level-1, curr);
     } else {
-        ret = findRHelper(key, level, curr->nodePointers[level].next);
+        ret =  findRHelper(key, level, curr->nodePointers[level].next);
     }
 
-    return NULL;
+    return ret;
 }
 
 /**
@@ -213,7 +215,7 @@ SkipNode * SkipList::findI(int key) {
         int nextKey = traverse->nodePointers[level].next->key;
 
         if (nextKey == key) {
-            retNode = traverse->nodePointers[level].next;
+            return traverse->nodePointers[level].next;
         } else if (key < nextKey) {
             level--;
         } else {
@@ -269,7 +271,7 @@ vector<int> SkipList::traverse() {
     vector<int> ret;
     SkipNode * listPrintingTraverser = head_;
 
-    while (listPrintingTraverser != tail_) {
+    while (listPrintingTraverser != NULL) {
         ret.push_back(listPrintingTraverser->key);
         listPrintingTraverser = listPrintingTraverser->nodePointers[0].next;
     }

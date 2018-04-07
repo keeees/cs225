@@ -10,7 +10,7 @@ int probability = 50;
 int maxLevel = 50;
 
 void assertEqual(vector<int> a, vector<int> b, bool rev = false) {
-    REQUIRE(a.size() == b.size());    
+    REQUIRE(a.size() == b.size());
     for(size_t i = 0; i < a.size(); i++) {
         REQUIRE(a[i] == b[i]);
     }
@@ -205,7 +205,7 @@ TEST_CASE("Tests constructors - 1", "[weight=2][part=2]") {
     list.insert(9999, HSLAPixel(99, 0.99, 0.99));
 
     vector<int> soln;
-    
+
     soln.push_back(42);
     soln.push_back(1337);
     soln.push_back(9999);
