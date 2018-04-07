@@ -18,9 +18,9 @@ if (argc<3)
 int i=0;
 int a = std::atoi(argv[1]);
 int b = std::atoi(argv[2]);
-
+int temp = a;
 a=b;
-b=a;
+b=temp;
 
 std::cout<<"A: "<<a<<" B: "<<a<<std::endl;
 
