@@ -1,4 +1,7 @@
 /* Your code here! */
+#ifndef DSETS_H
+#define DSETS_H
+
 #include <vector>
 
 using namespace std;
@@ -13,3 +16,4 @@ class DisjointSets
     private:
       vector<int> v;
 };
+#endif

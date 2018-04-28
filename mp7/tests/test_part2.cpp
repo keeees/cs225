@@ -1,5 +1,5 @@
 
-/**
+
 #include "../cs225/catch/catch.hpp"
 #include <iostream>
 #include <fstream>
@@ -210,144 +210,143 @@ TEST_CASE("testMakeMazeRandom", "[weight=10][part2]")
 	else
 		FAIL("Generated the same 50x50 maze twice");
 }
-
-TEST_CASE("testSolveMazeValidPath", "[weight=10][part2]")
-{
-	SquareMaze maze;
-	MazeReader soln = READ_SOLUTION_MAZE("testSolveMazeValidPath", 15, 15);
-	copyMaze(soln, &maze);
-	vector<int> solution = maze.solveMaze();
-
-	if (solution.empty())
-		FAIL("No solution was generated");
-
-	int x = 0;
-	int y = 0;
-	for (size_t i = 0; i < solution.size(); i++)
-	{
-		if (soln.isWallInDir(x, y, solution[i]))
-			FAIL("Solution passes through walls");
-		advancePosition(&x, &y, solution[i]);
-	}
-}
-
-TEST_CASE("testSolutionBottomRow", "[weight=10][part2]")
-{
-	SquareMaze maze;
-	MazeReader soln = READ_SOLUTION_MAZE("testSolutionBottomRow",15, 15);
-	copyMaze(soln, &maze);
-	vector<int> solution = maze.solveMaze();
-
-	int x = 0;
-	int y = 0;
-	for (size_t i = 0; i < solution.size(); i++)
-		advancePosition(&x, &y, solution[i]);
-
-	if (y != soln.getDestinationY())
-		FAIL("Didn't end up at the bottom row");
-}
-
-TEST_CASE("testSolutionCorrectSquare", "[weight=10][part2]")
-{
-	SquareMaze maze;
-	MazeReader soln = READ_SOLUTION_MAZE("testSolutionCorrectSquare",15, 15);
-	copyMaze(soln, &maze);
-	vector<int> solution = maze.solveMaze();
-
-	int x = 0;
-	int y = 0;
-	for (size_t i = 0; i < solution.size(); i++)
-		advancePosition(&x, &y, solution[i]);
-
-	if (y != soln.getDestinationY())
-		FAIL("Didn't end up at the bottom row");
-	if (x != soln.getDestinationX())
-		FAIL("Didn't end up at the correct bottom-row cell");
-}
-
-
-// The MazeReader object must be passed in because READ_SOLUTION uses
-// the function name to name the file
-void helpSolveMaze(const MazeReader & soln)
-{
-	SquareMaze maze;
-	copyMaze(soln, &maze);
-	vector<int> solution = maze.solveMaze();
-
-	cout << "first 10 steps in solution:" << endl;
-	for (size_t i = 0; i < solution.size() && i < soln.getSolutionSize() && i < 10; i++)
-		cout << "step " << i << ": actual=" << solution[i] << ", expected=" << soln.getSolutionAt(i) << endl;
-
-	REQUIRE(soln.getSolutionSize() == solution.size());
-
-	for (size_t i = 0; i < solution.size(); i++)
-		if (solution[i] != soln.getSolutionAt(i))
-			FAIL("Solution is incorrect");
-}
-
-TEST_CASE("testSolveMazeSmall", "[weight=10][part2]") {
-	 helpSolveMaze(READ_SOLUTION_MAZE("testSolveMazeSmall",700, 700));
-}
-
-TEST_CASE("testSolveMazeLarge", "[weight=10][part2]") {
-	helpSolveMaze(READ_SOLUTION_MAZE("testSolveMazeLarge", 700, 700));
-}
-
-
-TEST_CASE("testDrawMazeSmall", "[weight=10][part2]")
-{
-	PNG solnImage = READ_UNSOLVED_PNG("testDrawMazeSmall", 2, 2);
-	MazeReader soln(solnImage);
-	SquareMaze maze;
-	copyMaze(soln, &maze);
-	PNG * actualOutput = maze.drawMaze();
-	actualOutput->writeToFile("testDrawMazeSmall"+ string(".png"));
-	REQUIRE(*actualOutput == solnImage);
-}
-
-TEST_CASE("testDrawMazeMed", "[weight=10][part2]")
-{
-	PNG solnImage = READ_UNSOLVED_PNG("testDrawMazeMed",50, 50);
-	MazeReader soln(solnImage);
-	SquareMaze maze;
-	copyMaze(soln, &maze);
-	PNG * actualOutput = maze.drawMaze();
-	REQUIRE(*actualOutput == solnImage);
-}
-
-TEST_CASE("testDrawMazeLarge", "[weight=10][part2]")
-{
-	PNG solnImage = READ_UNSOLVED_PNG("testDrawMazeLarge",500, 500);
-	MazeReader soln(solnImage);
-	SquareMaze maze;
-	copyMaze(soln, &maze);
-	PNG * actualOutput = maze.drawMaze();
-	actualOutput->writeToFile("testDrawMazeLarge" + string(".png"));
-	REQUIRE(*actualOutput == solnImage);
-}
-
-TEST_CASE("testDrawSolutionMed", "[weight=10][part2]")
-{
-	PNG solnImage = READ_SOLUTION_PNG("testDrawSolutionMed",50, 50);
-	MazeReader soln(solnImage);
-	SquareMaze maze;
-	copyMaze(soln, &maze);
-	maze.solveMaze();
-	PNG * actualOutput = maze.drawMazeWithSolution();
-	actualOutput->writeToFile("testDrawSolutionMed" + string(".png"));
-	REQUIRE(*actualOutput == solnImage);
-}
-
-TEST_CASE("testDrawSolutionLarge", "[weight=10][part2]")
-{
-	PNG solnImage = READ_SOLUTION_PNG("testDrawSolutionLarge",500, 500);
-	MazeReader soln(solnImage);
-	SquareMaze maze;
-	copyMaze(soln, &maze);
-	maze.solveMaze();
-	PNG * actualOutput = maze.drawMazeWithSolution();
-	actualOutput->writeToFile("testDrawSolutionLarge"+ string(".png"));
-	REQUIRE(*actualOutput == solnImage);
-}
- */
-
+//
+// TEST_CASE("testSolveMazeValidPath", "[weight=10][part2]")
+// {
+// 	SquareMaze maze;
+// 	MazeReader soln = READ_SOLUTION_MAZE("testSolveMazeValidPath", 15, 15);
+// 	copyMaze(soln, &maze);
+// 	vector<int> solution = maze.solveMaze();
+//
+// 	if (solution.empty())
+// 		FAIL("No solution was generated");
+//
+// 	int x = 0;
+// 	int y = 0;
+// 	for (size_t i = 0; i < solution.size(); i++)
+// 	{
+// 		if (soln.isWallInDir(x, y, solution[i]))
+// 			FAIL("Solution passes through walls");
+// 		advancePosition(&x, &y, solution[i]);
+// 	}
+// }
+//
+// TEST_CASE("testSolutionBottomRow", "[weight=10][part2]")
+// {
+// 	SquareMaze maze;
+// 	MazeReader soln = READ_SOLUTION_MAZE("testSolutionBottomRow",15, 15);
+// 	copyMaze(soln, &maze);
+// 	vector<int> solution = maze.solveMaze();
+//
+// 	int x = 0;
+// 	int y = 0;
+// 	for (size_t i = 0; i < solution.size(); i++)
+// 		advancePosition(&x, &y, solution[i]);
+//
+// 	if (y != soln.getDestinationY())
+// 		FAIL("Didn't end up at the bottom row");
+// }
+//
+// TEST_CASE("testSolutionCorrectSquare", "[weight=10][part2]")
+// {
+// 	SquareMaze maze;
+// 	MazeReader soln = READ_SOLUTION_MAZE("testSolutionCorrectSquare",15, 15);
+// 	copyMaze(soln, &maze);
+// 	vector<int> solution = maze.solveMaze();
+//
+// 	int x = 0;
+// 	int y = 0;
+// 	for (size_t i = 0; i < solution.size(); i++)
+// 		advancePosition(&x, &y, solution[i]);
+//
+// 	if (y != soln.getDestinationY())
+// 		FAIL("Didn't end up at the bottom row");
+// 	if (x != soln.getDestinationX())
+// 		FAIL("Didn't end up at the correct bottom-row cell");
+// }
+//
+//
+// // The MazeReader object must be passed in because READ_SOLUTION uses
+// // the function name to name the file
+// void helpSolveMaze(const MazeReader & soln)
+// {
+// 	SquareMaze maze;
+// 	copyMaze(soln, &maze);
+// 	vector<int> solution = maze.solveMaze();
+//
+// 	cout << "first 10 steps in solution:" << endl;
+// 	for (size_t i = 0; i < solution.size() && i < soln.getSolutionSize() && i < 10; i++)
+// 		cout << "step " << i << ": actual=" << solution[i] << ", expected=" << soln.getSolutionAt(i) << endl;
+//
+// 	REQUIRE(soln.getSolutionSize() == solution.size());
+//
+// 	for (size_t i = 0; i < solution.size(); i++)
+// 		if (solution[i] != soln.getSolutionAt(i))
+// 			FAIL("Solution is incorrect");
+// }
+//
+// TEST_CASE("testSolveMazeSmall", "[weight=10][part2]") {
+// 	 helpSolveMaze(READ_SOLUTION_MAZE("testSolveMazeSmall",700, 700));
+// }
+//
+// TEST_CASE("testSolveMazeLarge", "[weight=10][part2]") {
+// 	helpSolveMaze(READ_SOLUTION_MAZE("testSolveMazeLarge", 700, 700));
+// }
+//
+//
+// TEST_CASE("testDrawMazeSmall", "[weight=10][part2]")
+// {
+// 	PNG solnImage = READ_UNSOLVED_PNG("testDrawMazeSmall", 2, 2);
+// 	MazeReader soln(solnImage);
+// 	SquareMaze maze;
+// 	copyMaze(soln, &maze);
+// 	PNG * actualOutput = maze.drawMaze();
+// 	actualOutput->writeToFile("testDrawMazeSmall"+ string(".png"));
+// 	REQUIRE(*actualOutput == solnImage);
+// }
+//
+// TEST_CASE("testDrawMazeMed", "[weight=10][part2]")
+// {
+// 	PNG solnImage = READ_UNSOLVED_PNG("testDrawMazeMed",50, 50);
+// 	MazeReader soln(solnImage);
+// 	SquareMaze maze;
+// 	copyMaze(soln, &maze);
+// 	PNG * actualOutput = maze.drawMaze();
+// 	REQUIRE(*actualOutput == solnImage);
+// }
+//
+// TEST_CASE("testDrawMazeLarge", "[weight=10][part2]")
+// {
+// 	PNG solnImage = READ_UNSOLVED_PNG("testDrawMazeLarge",500, 500);
+// 	MazeReader soln(solnImage);
+// 	SquareMaze maze;
+// 	copyMaze(soln, &maze);
+// 	PNG * actualOutput = maze.drawMaze();
+// 	actualOutput->writeToFile("testDrawMazeLarge" + string(".png"));
+// 	REQUIRE(*actualOutput == solnImage);
+// }
+//
+// TEST_CASE("testDrawSolutionMed", "[weight=10][part2]")
+// {
+// 	PNG solnImage = READ_SOLUTION_PNG("testDrawSolutionMed",50, 50);
+// 	MazeReader soln(solnImage);
+// 	SquareMaze maze;
+// 	copyMaze(soln, &maze);
+// 	maze.solveMaze();
+// 	PNG * actualOutput = maze.drawMazeWithSolution();
+// 	actualOutput->writeToFile("testDrawSolutionMed" + string(".png"));
+// 	REQUIRE(*actualOutput == solnImage);
+// }
+//
+// TEST_CASE("testDrawSolutionLarge", "[weight=10][part2]")
+// {
+// 	PNG solnImage = READ_SOLUTION_PNG("testDrawSolutionLarge",500, 500);
+// 	MazeReader soln(solnImage);
+// 	SquareMaze maze;
+// 	copyMaze(soln, &maze);
+// 	maze.solveMaze();
+// 	PNG * actualOutput = maze.drawMazeWithSolution();
+// 	actualOutput->writeToFile("testDrawSolutionLarge"+ string(".png"));
+// 	REQUIRE(*actualOutput == solnImage);
+// }
+//
