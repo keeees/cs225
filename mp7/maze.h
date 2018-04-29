@@ -1,6 +1,7 @@
 /* Your code here! */
 #include "dsets.h"
 #include "cs225/PNG.h"
+#include "cs225/HSLAPixel.h"
 using namespace cs225;
 class SquareMaze{
 public:
@@ -10,7 +11,7 @@ public:
   void setWall (int x, int y, int dir, bool exists);
   vector<int> solveMaze();
   PNG * drawMaze()const;
-  PNG * drawMazeWithSolution()const;
+  PNG * drawMazeWithSolution();
 private:
   int width_;
   int height_;
