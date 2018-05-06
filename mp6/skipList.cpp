@@ -104,7 +104,7 @@ void SkipList::insert(int key, HSLAPixel value) {
             forward->nodePointers[forwardLevel].prev = newNode;
             newNode->nodePointers[forwardLevel].next = forward;
             forwardLevel++;
-        } if (forward->nodePointers.size() > (size_t)forwardLevel) {
+        }else if (forward->nodePointers.size() > (size_t)forwardLevel) {
             forward->nodePointers[forwardLevel].prev = newNode;
             newNode->nodePointers[forwardLevel].next = forward;
             forwardLevel++;
@@ -118,7 +118,7 @@ void SkipList::insert(int key, HSLAPixel value) {
             prev->nodePointers[backwardLevel].next = newNode;
             newNode->nodePointers[backwardLevel].prev = prev;
             backwardLevel++;
-        } if (prev->nodePointers.size() > (size_t)backwardLevel) {
+        }else  if (prev->nodePointers.size() > (size_t)backwardLevel) {
             prev->nodePointers[backwardLevel].next = newNode;
             newNode->nodePointers[backwardLevel].prev = prev;
             backwardLevel++;
@@ -138,10 +138,10 @@ HSLAPixel SkipList::search(int key) {
     SkipNode * retval = find(key);
 
     if (retval == NULL) {
-        return retval->value;
+        return HSLAPixel(0, 0, 0, 0.5);
     }
 
-    return HSLAPixel(0, 0, 0, 0.5);
+    return retval->value;
 }
 
 /**
@@ -245,6 +245,7 @@ bool SkipList::remove(int key) {
     // can't remove a node that doesn't exist
     if(node == NULL) {
         ret = false;
+        return ret;
     }
 
     length_--;
@@ -259,7 +260,7 @@ bool SkipList::remove(int key) {
     }
 
     delete node;
-    return true;
+    return ret;
 }
 
 
